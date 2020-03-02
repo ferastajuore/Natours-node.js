@@ -6,12 +6,28 @@ const User = require('../../models/userModel');
 const Review = require('../../models/reviewModel');
 dotenv.config({ path: './config.env' });
 
-const DB = process.env.DATABASE_LOCAL;
+// conneact to the MONGOOSE Local
+// const DB = process.env.DATABASE_LOCAL;
+// mongoose
+// 	.connect(DB, {
+// 		useNewUrlParser: true,
+// 		useCreateIndex: true,
+// 		useFindAndModify: false
+// 	})
+// 	.then(() => console.log('DB connaction successful!'));
+
+// conneact to the MONGOOSE Remotely
+const DB = process.env.DATABASE_REMOTLE.replace(
+	'<PASSWORD>',
+	process.env.DATABASE_PASSWORD
+);
+
 mongoose
 	.connect(DB, {
 		useNewUrlParser: true,
 		useCreateIndex: true,
-		useFindAndModify: false
+		useFindAndModify: false,
+		useUnifiedTopology: true
 	})
 	.then(() => console.log('DB connaction successful!'));
 
@@ -53,4 +69,4 @@ if (process.argv[2] === '--import') {
 	deleteData();
 }
 
-console.log(process.argv);
+// console.log(process.argv);

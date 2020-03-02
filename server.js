@@ -10,8 +10,12 @@ process.on('uncaughtException', err => {
 dotenv.config({ path: './config.env' }); // Read var from file to saved in nodejs environment variables
 const app = require('./app');
 
-// Connact To the MONGOOSE
-const DB = process.env.DATABASE_LOCAL;
+// conneact to the MONGOOSE Remotely
+const DB = process.env.DATABASE_REMOTLE.replace(
+	'<PASSWORD>',
+	process.env.DATABASE_PASSWORD
+);
+
 mongoose
 	.connect(DB, {
 		useNewUrlParser: true,
@@ -19,7 +23,18 @@ mongoose
 		useFindAndModify: false,
 		useUnifiedTopology: true
 	})
-	.then(() => console.log('DB connaction successful'));
+	.then(() => console.log('DB connaction successful!'));
+
+// Connact To the MONGOOSE Local
+// const DB = process.env.DATABASE_LOCAL;
+// mongoose
+// 	.connect(DB, {
+// 		useNewUrlParser: true,
+// 		useCreateIndex: true,
+// 		useFindAndModify: false,
+// 		useUnifiedTopology: true
+// 	})
+// 	.then(() => console.log('DB connaction successful'));
 
 // LISTEN ON PORT
 const port = process.env.PORT || 8000;
